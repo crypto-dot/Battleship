@@ -1,0 +1,74 @@
+.gameStart {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 2.5fr 5fr;
+
+    .gameStartHeader {
+        width: 100%;
+        background-image: url('../assets/images/battleshipHeaderImage.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+
+        .gameStartTitle {
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            letter-spacing: .5rem;
+            font-size: 6.25rem;
+
+        }
+    }
+
+    .gameStartBottom {
+        width: 100%;
+        background-image: url('../assets/images/water.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: .5rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(3.7px);
+            -webkit-backdrop-filter: blur(3.7px);
+            padding: 2rem;
+            font-size: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+
+            label {
+                color: white;
+            }
+
+            .gameStartInput {
+                font-size: 2rem;
+                padding-left: 1rem;
+                height: 3.5rem;
+                border-radius: .3rem;
+                border: none;
+                outline: none;
+            }
+
+            .arrowIcon {
+                font-size: 4rem;
+                color: white;
+                cursor: pointer;
+
+                &:hover,
+                &:active {
+                    color: rgb(200, 200, 200);
+                }
+            }
+        }
+    }
+}
