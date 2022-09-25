@@ -59,14 +59,19 @@
                 outline: none;
             }
 
-            .arrowIcon {
-                font-size: 4rem;
-                color: white;
+            button {
+                background-color: transparent;
+                border: none;
                 cursor: pointer;
 
-                &:hover,
-                &:active {
-                    color: rgb(200, 200, 200);
+                .arrowIcon {
+                    font-size: 4rem;
+                    color: white;
+
+                    &:hover,
+                    &:active {
+                        color: rgb(200, 200, 200);
+                    }
                 }
             }
         }
