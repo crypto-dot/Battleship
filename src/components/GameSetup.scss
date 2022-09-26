@@ -39,5 +39,10 @@
         .hoverCell {
             background-color: #26fff194;
         }
+
+        .errorCell {
+            cursor: not-allowed;
+            background-color: #ff262694;
+        }
     }
 }

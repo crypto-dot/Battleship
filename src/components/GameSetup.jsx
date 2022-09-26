@@ -11,7 +11,7 @@ const GameSetup = () => {
     const generateGridCells = () => {
         let arr = [];
         for (let i = 0; i < GRID_COUNT; i++) {
-            arr.push(<div key={v4()} onMouseOver={(e) => HandleCellHover(e, i)} className={hover[i] ? 'gridCell hoverCell' : 'gridCell'}></div>);
+            arr.push(<div key={v4()} onMouseEnter={(e) => HandleCellHover(e, i)} className={hover[i] ? 'gridCell hoverCell' : hover[i] == null ? 'gridCell errorCell' : 'gridCell'}></div>);
         }
         return arr;
     }
@@ -22,6 +22,8 @@ const GameSetup = () => {
             for (let i = 0; i < GRID_COUNT; i++) {
                 if (i >= index && i < index + shipLength[0] && (index % 10) + shipLength[0] <= 10) {
                     hoverStates[i] = true;
+                } else if (i === index) {
+                    hoverStates[i] = null;
                 } else {
                     hoverStates[i] = false;
                 }
