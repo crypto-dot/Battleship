@@ -7,7 +7,6 @@ function App() {
   const { username } = useContext(GameContext);
   return (
     <div className='app'>
-      {console.log(username)}
       {username == '' ? <GameStart /> : <GameSetup />}
     </div>
   )

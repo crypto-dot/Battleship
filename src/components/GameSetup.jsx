@@ -1,22 +1,46 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GameContext } from '../context/gameContext';
 import { v4 } from 'uuid';
 import './GameSetup.scss';
+import { rotateShip } from '../context/gameAction';
 
 const GRID_COUNT = 100;
 
 const GameSetup = () => {
     const [hover, setHover] = useState(Array(GRID_COUNT).fill(false));
-    const { shipLength, rotateY } = useContext(GameContext);
+    const { shipLength, rotateY, dispatch } = useContext(GameContext);
+    const [rotated, setRotated] = useState(false);
+    useEffect(() => {
+        const handleQPressed = (e) => {
+            console.log(e.key);
+            if (e.key === 'q') {
+                dispatch(rotateShip(rotated));
+            }
+            setRotated(!rotated);
+        }
+        window.addEventListener('keypress', handleQPressed);
+        return () => {
+            window.removeEventListener('keypress', handleQPressed);
+        }
+    }, [rotated]);
+
+    const handleErrorCell = () => {
+        document.querySelector('.grid').classList.add('gridError');
+        return 'gridCell errorCell';
+    }
+    const handleMouseLeave = () => {
+        document.querySelector('.grid').classList.remove('gridError');
+        return 'gridCell hoverCell';
+    }
     const generateGridCells = () => {
         let arr = [];
         for (let i = 0; i < GRID_COUNT; i++) {
-            arr.push(<div key={v4()} onMouseEnter={(e) => HandleCellHover(e, i)} className={hover[i] ? 'gridCell hoverCell' : hover[i] == null ? 'gridCell errorCell' : 'gridCell'}></div>);
+            arr.push(<div key={v4()} onMouseEnter={(e) => HandleCellEnter(e, i)} className={hover[i] ? handleMouseLeave() : hover[i] == null ? handleErrorCell() : 'gridCell'}></div>);
         }
         return arr;
     }
 
-    const HandleCellHover = (e, index) => {
+    const HandleCellEnter = (e, index) => {
         let hoverStates = [...hover];
         if (!rotateY) {
             for (let i = 0; i < GRID_COUNT; i++) {
@@ -30,9 +54,10 @@ const GameSetup = () => {
             }
         } else {
             for (let i = 0; i < GRID_COUNT; i++) {
-                console.log(index % 10)
-                if (i >= index + 10 && i < index + shipLength[0] && (index % 10) + shipLength[0] < 10) {
+                if (i % 10 === index % 10 && i < index + shipLength[0] && i > index - (shipLength[0] * 10) && index - (shipLength[0] * 10) >= -10) {
                     hoverStates[i] = true;
+                } else if (i === index) {
+                    hoverStates[i] = null;
                 } else {
                     hoverStates[i] = false;
                 }
@@ -43,7 +68,7 @@ const GameSetup = () => {
     return (
         <div className='gameSetup'>
             <h2>Place Your Ships</h2>
-            <div className='grid'><span className='gridInstruction'>Q - Rotate</span>{generateGridCells()}</div>
+            <div onMouseLeave={handleMouseLeave} className='grid'><span className='gridInstruction'>Q - Rotate</span>{generateGridCells()}</div>
         </div>
     )
 }

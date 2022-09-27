@@ -41,8 +41,12 @@
         }
 
         .errorCell {
-            cursor: not-allowed;
+            pointer-events: none;
             background-color: #ff262694;
         }
+    }
+
+    .gridError {
+        cursor: not-allowed;
     }
 }
