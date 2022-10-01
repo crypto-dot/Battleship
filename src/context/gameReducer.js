@@ -5,11 +5,6 @@ export const gameReducer = (state, action) => {
                 ...state,
                 username: action.payload
             }
-        case 'ROTATE_Y':
-            return {
-                ...state,
-                rotateY: !(state.rotateY)
-            }
         default:
             return {
                 ...state

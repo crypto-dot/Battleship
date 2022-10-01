@@ -4,8 +4,3 @@ export const startGame = (username) => {
         payload: username
     }
 }
-export const rotateShip = () => {
-    return {
-        type: 'ROTATE_Y'
-    }
-}
