@@ -1,0 +1,14 @@
+.waterCellSetup {
+    border: 1px solid white;
+    height: clamp(30px, 4.55vw, 100px);
+    width: clamp(30px, 4.55vw, 100px);
+}
+
+.hoverWaterCellSetup {
+    background-color: #30a29a96;
+}
+
+.waterCellSetupError {
+    background-color: red;
+    cursor: not-allowed;
+}

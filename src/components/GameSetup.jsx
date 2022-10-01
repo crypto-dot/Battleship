@@ -35,13 +35,15 @@ const GameSetup = () => {
     const generateGridCells = () => {
         let arr = [];
         for (let i = 0; i < GRID_COUNT; i++) {
-            arr.push(<div key={v4()} onMouseEnter={(e) => HandleCellEnter(e, i)} className={hover[i] ? handleMouseLeave() : hover[i] == null ? handleErrorCell() : 'gridCell'}></div>);
+            arr.push(<div key={i} onMouseEnter={(e) => HandleCellEnter(e, i)} className={hover[i] ? handleMouseLeave() : hover[i] == null ? handleErrorCell() : 'gridCell'}></div>);
         }
         return arr;
     }
 
     const HandleCellEnter = (e, index) => {
         let hoverStates = [...hover];
+        console.log('first');
+        console.log(rotateY);
         if (!rotateY) {
             for (let i = 0; i < GRID_COUNT; i++) {
                 if (i >= index && i < index + shipLength[0] && (index % 10) + shipLength[0] <= 10) {
@@ -53,8 +55,10 @@ const GameSetup = () => {
                 }
             }
         } else {
+            console.log('second');
             for (let i = 0; i < GRID_COUNT; i++) {
-                if (i % 10 === index % 10 && i < index + shipLength[0] && i > index - (shipLength[0] * 10) && index - (shipLength[0] * 10) >= -10) {
+                if (i % 10 === index % 10 && i < index + shipLength[0]) {
+                    debugger;
                     hoverStates[i] = true;
                 } else if (i === index) {
                     hoverStates[i] = null;

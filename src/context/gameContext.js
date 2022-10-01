@@ -4,8 +4,7 @@ import { createContext, useReducer } from "react";
 const INITIAL_STATE = {
     username: "",
     gameSetup: false,
-    shipLength: [5, 4, 3, 2],
-    rotateY: false
+    shipLength: [5, 4, 3, 2]
 }
 
 export const GameContext = createContext(INITIAL_STATE);
@@ -19,7 +18,6 @@ export const GameContextProvider = ({ children }) => {
                 {
                     username: state.username,
                     shipLength: state.shipLength,
-                    rotateY: state.rotateY,
                     dispatch
                 }
             }
