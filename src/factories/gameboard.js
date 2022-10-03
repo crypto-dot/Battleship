@@ -1,5 +1,5 @@
 class Gameboard {
-    #GAMEBOARD_SIZE = 99;
+    #GAMEBOARD_SIZE = 100;
     #sunk_ships = 0;
     #posArr = Array(this.#GAMEBOARD_SIZE).fill({
         ship: false,

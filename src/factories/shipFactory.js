@@ -1,8 +1,12 @@
 class Ship {
+    #length = 0;
+    #name = '';
     #posArr = [];
     #isSunk = false;
-    constructor(posArr) {
+    constructor(posArr, name = 'default', length = 0) {
         this.#posArr = posArr;
+        this.#name = name;
+        this.#length = length;
     }
     hit(pos) {
         for (let i = 0; i < this.#posArr.length; i++) {
@@ -30,7 +34,15 @@ class Ship {
         }
         return positions;
     }
-
+    getName() {
+        return this.#name;
+    }
+    getLength() {
+        return this.#length;
+    }
+    setPosArr(posArr) {
+        this.#posArr = posArr;
+    }
 }
 
 export default Ship;
