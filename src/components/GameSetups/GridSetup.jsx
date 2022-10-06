@@ -2,16 +2,41 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import WaterCellSetup from './WaterCellSetup';
 import './GridSetup.scss';
 import './WaterCellSetup.scss';
+import { gameSetupFinished, setShipLocation } from '../../context/gameAction';
 import { GameContext } from '../../context/gameContext';
-import { useReducer } from 'react';
 const GRID_COUNT = 100;
 const GridSetup = () => {
     const [hover, setHover] = useState(Array(100).fill(false));
-    const { shipLength, dispatch } = useContext(GameContext);
+    const [clicked, setClicked] = useState(Array(100).fill(false));
+    const { ships, dispatch } = useContext(GameContext);
     const rotated = useRef(false);
     const [currentCursorIndex, setCurrentCursorIndex] = useState(0);
-    const setRotatedSync = async (rotated) => {
+    const shipIndex = useRef(0);
+    const handleMouseLeave = () => {
+        return Array(100).fill(false);
+    }
+    const handleClick = (e, index) => {
 
+        if (e.target.classList.contains('waterCellSetupError')) {
+            return [...clicked];
+        }
+        const clickedStates = [...clicked];
+        const posArr = [];
+        if (!rotated.current) {
+            for (let i = index; i < index + ships[shipIndex.current].getLength(); i++) {
+                clickedStates[i] = true;
+                posArr.push(i);
+            }
+        } else {
+            for (let i = index; i < index + (10 * ships[shipIndex.current].getLength()); i += 10) {
+                clickedStates[i] = true;
+                posArr.push(i);
+            }
+        }
+        dispatch(setShipLocation(posArr, shipIndex.current));
+        shipIndex.current = shipIndex.current + 1;
+
+        return clickedStates;
     }
     useEffect(() => {
         const handleQPressed = (e) => {
@@ -27,14 +52,17 @@ const GridSetup = () => {
 
     const handleHover = (e, index) => {
         let hoverStates = Array(100).fill(false);
-        console.log(currentCursorIndex);
         setCurrentCursorIndex(index);
         if (e == null) {
             rotated.current = !rotated.current;
         }
+        if (shipIndex.current === 5) {
+            dispatch(gameSetupFinished());
+        }
+
         if (!rotated.current) {
-            for (let i = index; i < index + shipLength[0] && i < 100; i++) {
-                if ((index % 10) + shipLength[0] > 10) {
+            for (let i = index; i < index + ships[shipIndex.current].getLength() && i < 100; i++) {
+                if ((index % 10) + ships[shipIndex.current].getLength() > 10) {
                     if (i === index) {
                         hoverStates[i] = null;
                     }
@@ -47,8 +75,8 @@ const GridSetup = () => {
                 }
             }
         } else {
-            for (let i = index; i < index + (10 * shipLength[0]); i += 10) {
-                if (index + (10 * shipLength[0]) >= 110) {
+            for (let i = index; i < index + (10 * ships[shipIndex.current].getLength()); i += 10) {
+                if (index + (10 * ships[shipIndex.current].getLength()) >= 110) {
                     if (i === index) {
                         hoverStates[i] = null;
                     }
@@ -61,13 +89,31 @@ const GridSetup = () => {
                 }
             }
         }
+        for (let i = 0; i < GRID_COUNT; i++) {
+            if (hoverStates[i] == clicked[i] && clicked[i] === true) {
+                hoverStates = Array(100).fill(false);
+                hoverStates[index] = null;
+                break;
+            }
+        }
         return hoverStates;
     }
 
     const generateWaterCells = () => {
         let arr = [];
         for (let i = 0; i < GRID_COUNT; i++) {
-            arr.push(<WaterCellSetup setHover={setHover} key={`${i} ${hover[i]}`} index={i} onMouseEnter={handleHover} hover={hover[i]} ></WaterCellSetup>)
+            arr.push(<WaterCellSetup
+                setClicked={setClicked}
+                onClick={handleClick}
+                onMouseLeave={handleMouseLeave}
+                setHover={setHover}
+                clicked={clicked[i]}
+                key={`${i} ${hover[i]}`}
+                index={i}
+                onMouseEnter={handleHover}
+                hover={hover[i]} >
+
+            </WaterCellSetup>)
         }
         return arr;
     }
