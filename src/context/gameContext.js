@@ -10,7 +10,7 @@ const destroyer = new Ship([], 'Destroyer', 2);
 const INITIAL_STATE = {
     username: "",
     gameSetup: false,
-    ships: [carrier, battleship, cruiser, submarine, destroyer]
+    ships: [carrier, battleship, cruiser, submarine, destroyer],
 }
 
 export const GameContext = createContext(INITIAL_STATE);
@@ -24,6 +24,7 @@ export const GameContextProvider = ({ children }) => {
                 {
                     username: state.username,
                     ships: state.ships,
+                    gameSetup: state.gameSetup,
                     dispatch
                 }
             }

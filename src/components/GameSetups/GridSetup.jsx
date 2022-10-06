@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import WaterCellSetup from './WaterCellSetup';
 import './GridSetup.scss';
 import './WaterCellSetup.scss';
+import { gameSetupFinished, setShipLocation } from '../../context/gameAction';
 import { GameContext } from '../../context/gameContext';
 const GRID_COUNT = 100;
 const GridSetup = () => {
@@ -16,20 +17,25 @@ const GridSetup = () => {
     }
     const handleClick = (e, index) => {
 
-        debugger;
         if (e.target.classList.contains('waterCellSetupError')) {
             return [...clicked];
         }
-        let clickedStates = [...clicked];
+        const clickedStates = [...clicked];
+        const posArr = [];
         if (!rotated.current) {
             for (let i = index; i < index + ships[shipIndex.current].getLength(); i++) {
                 clickedStates[i] = true;
+                posArr.push(i);
             }
         } else {
             for (let i = index; i < index + (10 * ships[shipIndex.current].getLength()); i += 10) {
                 clickedStates[i] = true;
+                posArr.push(i);
             }
         }
+        dispatch(setShipLocation(posArr, shipIndex.current));
+        shipIndex.current = shipIndex.current + 1;
+
         return clickedStates;
     }
     useEffect(() => {
@@ -46,12 +52,14 @@ const GridSetup = () => {
 
     const handleHover = (e, index) => {
         let hoverStates = Array(100).fill(false);
-        console.log(currentCursorIndex);
         setCurrentCursorIndex(index);
-        debugger;
         if (e == null) {
             rotated.current = !rotated.current;
         }
+        if (shipIndex.current === 5) {
+            dispatch(gameSetupFinished());
+        }
+
         if (!rotated.current) {
             for (let i = index; i < index + ships[shipIndex.current].getLength() && i < 100; i++) {
                 if ((index % 10) + ships[shipIndex.current].getLength() > 10) {

@@ -3,7 +3,7 @@ class Ship {
     #name = '';
     #posArr = [];
     #isSunk = false;
-    constructor(posArr, name = 'default', length = 0) {
+    constructor(posArr = [], name = 'default', length = 0) {
         this.#posArr = posArr;
         this.#name = name;
         this.#length = length;
@@ -42,6 +42,7 @@ class Ship {
     }
     setPosArr(posArr) {
         this.#posArr = posArr;
+        return this;
     }
 }
 

@@ -28,3 +28,14 @@ describe("Testing Gameboard class", () => {
         expect(gameBoard.allShipsSunk()).toBe(true);
     });
 });
+describe("Testing empty gameboard class", () => {
+    const ship = new Ship();
+    const ship2 = new Ship();
+    const ship3 = new Ship();
+
+    const gameBoard = new Gameboard([ship, ship2, ship3]);
+
+    test("Testing hit on empty gameboard", () => {
+        expect(gameBoard.hit(9)).toBe(false);
+    })
+});

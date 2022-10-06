@@ -9,7 +9,20 @@
         width: 100%;
         text-align: center;
         color: white;
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .mainContent {
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        gap: 1rem;
+
+        .mainContentTitle {
+            flex: .5;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
     }
 
 }
