@@ -1,4 +1,5 @@
 class Player {
+    #name = '';
     #enemyGameBoard;
     constructor(enemyGameBoard) {
         this.#enemyGameBoard = enemyGameBoard;
@@ -11,10 +12,16 @@ class Player {
         return true;
     }
     randomAttack() {
+        let count = 0;
         let randomPos;
         do {
             randomPos = Math.floor(Math.random() * 100);
-        } while (!this.attack(randomPos));
+            count++;
+        } while (!this.attack(randomPos) && count != 100);
+        return this.attack(randomPos);
+    }
+    didWin() {
+        return this.#enemyGameBoard.allShipsSunken();
     }
     getEnemyGameBoard() {
         return this.#enemyGameBoard;

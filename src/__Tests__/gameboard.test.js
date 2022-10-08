@@ -8,6 +8,9 @@ describe("Testing Gameboard class", () => {
     let posArr3 = [{ pos: 90, hit: false }, { pos: 91, hit: false }, { pos: 92, hit: false }];
     const ship3 = new Ship(posArr3);
     const gameBoard = new Gameboard([ship1, ship2, ship3]);
+    test("Testing if Gameboard correctly records misses or hits on the gameboard", () => {
+        expect(gameBoard.isHit(93)).toBe(false);
+    });
     test("Testing if Gameboard correctly hits ship", () => {
         expect(gameBoard.hit(91)).toBe(true);
     });

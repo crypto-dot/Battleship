@@ -5,6 +5,8 @@ class Gameboard {
         ship: false,
         hit: false
     });
+
+    ;
     #arrOfShips = [];
     constructor(arrOfShips) {
         let positionsOfShips = [];
@@ -18,13 +20,15 @@ class Gameboard {
                 ship: true
             }
         }
-
     }
     hit(pos) {
         if (pos < 0 || pos > 99) {
             return false;
         }
-        this.#posArr[pos].hit = true;
+        this.#posArr[pos] = {
+            ...this.#posArr[pos],
+            hit: true
+        };
         for (let ship of this.#arrOfShips) {
             if (ship.hit(pos)) {
                 if (ship.getIsSunk()) {

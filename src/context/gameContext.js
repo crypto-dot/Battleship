@@ -7,10 +7,13 @@ const carrier = new Ship([], 'Carrier', 5);
 const cruiser = new Ship([], 'Cruiser', 3);
 const submarine = new Ship([], 'Submarine', 3);
 const destroyer = new Ship([], 'Destroyer', 2);
+const ships = [battleship, carrier, cruiser, submarine, destroyer];
+const playerGameBoard = new Gameboard();
 const INITIAL_STATE = {
     username: "",
     gameSetup: false,
     ships: [carrier, battleship, cruiser, submarine, destroyer],
+    playerGam
 }
 
 export const GameContext = createContext(INITIAL_STATE);
