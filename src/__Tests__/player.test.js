@@ -115,23 +115,24 @@ describe("Testing Player class", () => {
     ])("Testing attack method in Player class", (index, expected) => {
         expect(computer.attack(index)).toBe(expected);
     });
+    test("Testing attack method in Player class (spaces already attacked", () => {
+        for (let i = 0; i < 100; i++) {
+
+            expect(computer.attack(i)).toBe(false);
+        }
+    });
+    test("Testing random attack method in Player class", () => {
+        let posArr4 = [{ pos: 1, hit: false }, { pos: 2, hit: false }, { pos: 3, hit: false }];
+        const ship4 = new Ship(posArr4);
+        let posArr5 = [{ pos: 55, hit: false }, { pos: 65, hit: false }];
+        const ship5 = new Ship(posArr5);
+        let posArr6 = [{ pos: 90, hit: false }, { pos: 91, hit: false }, { pos: 92, hit: false }];
+        const ship6 = new Ship(posArr6);
+        const gameBoard2 = new Gameboard([ship4, ship5, ship6]);
+        const computer2 = new Player(gameBoard2);
+
+        for (let i = 0; i < 100; i++) {
+            expect(computer2.randomAttack()).toBe(true);
+        }
+    });
 });
-//     test("Testing random attack method in Player class (board filled with attacks)", () => {
-//         for (let i = 0; i < 100; i++) {
-//             expect(computer.randomAttack()).toBe(true);
-//         }
-//     });
-//     test("Testing random attack method in Player class (board empty with no attacks)", () => {
-//         let posArr4 = [{ pos: 1, hit: true }, { pos: 2, hit: true }, { pos: 3, hit: true }];
-//         const ship4 = new Ship(posArr4);
-//         let posArr5 = [{ pos: 55, hit: true }, { pos: 65, hit: true }];
-//         const ship5 = new Ship(posArr5);
-//         let posArr6 = [{ pos: 90, hit: true }, { pos: 91, hit: true }, { pos: 92, hit: true }];
-//         const ship6 = new Ship(posArr6);
-//         const gameBoard2 = new Gameboard([ship4, ship5, ship6]);
-//         const computer2 = new Player(gameBoard2);
-//         for (let i = 0; i < 100; i++) {
-//             expect(computer2.randomAttack()).toBe(true);
-//         }
-//     })
-// });
