@@ -6,7 +6,6 @@ export const gameReducer = (state, action) => {
                 username: action.payload
             }
         case 'SET_SHIP_LOCATION':
-            console.log(state.ships);
             return {
                 ...state,
                 ships: [state.ships[action.payload.shipIndex].setPosArr(action.payload.posArr), ...state.ships.filter((ship, index) => index !== action.payload.shipIndex)]

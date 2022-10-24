@@ -7,7 +7,7 @@ const WaterCellSetup = ({ hover, clicked, onMouseLeave, index, setClicked, onCli
             onClick={(e) => setClicked(onClick(e, index))}
             onMouseLeave={(e) => setHover(onMouseLeave)}
             onMouseEnter={(e) => setHover(onMouseEnter(e, index))}
-            className={hover ? 'waterCellSetup hoverWaterCellSetup' : hover === null ? 'waterCellSetup waterCellSetupError' : clicked ? 'waterCellSetup waterCellSetupClicked' : 'waterCellSetup'} ></div>
+            className={hover ? 'waterCellSetup hoverWaterCellSetup' : hover === null ? 'waterCellSetup waterCellSetupError' : hover === undefined ? 'waterCellSetup waterCellHoverSpacer' : clicked ? 'waterCellSetup waterCellSetupClicked' : clicked === null ? 'waterCellSetup waterCellHoverSpacer' : 'waterCellSetup'} ></div>
     )
 }
 

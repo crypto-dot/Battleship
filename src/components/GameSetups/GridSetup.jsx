@@ -51,17 +51,34 @@ const GridSetup = () => {
     }, [currentCursorIndex]);
 
     const handleHover = (e, index) => {
+        if (shipIndex.current === 5) {
+            dispatch(gameSetupFinished());
+            return;
+        }
         let hoverStates = Array(100).fill(false);
         setCurrentCursorIndex(index);
         if (e == null) {
             rotated.current = !rotated.current;
         }
-        if (shipIndex.current === 5) {
-            dispatch(gameSetupFinished());
+        let lowerBounds, upperBounds;
+        let isFirstColumnOverFlow = false;
+        let isLastColumnOverFloww = false;
+        if (index % 10 === 0) {
+            lowerBounds = index;
+            upperBounds = index + ships[shipIndex.current].getLength() + 1;
+            isFirstColumnOverFlow = true;
+            console.log('upperBoudns is : ' + upperBounds);
         }
-
+        else if (((index % 10) + 1) + ships[shipIndex.current].getLength() > 10) {
+            lowerBounds = index - 1;
+            upperBounds = index + ships[shipIndex.current].getLength();
+            isLastColumnOverFloww = true;
+        } else {
+            lowerBounds = index - 1;
+            upperBounds = (index + 1) + ships[shipIndex.current].getLength();
+        }
         if (!rotated.current) {
-            for (let i = index; i < index + ships[shipIndex.current].getLength() && i < 100; i++) {
+            for (let i = lowerBounds; i < upperBounds && i < 100; i++) {
                 if ((index % 10) + ships[shipIndex.current].getLength() > 10) {
                     if (i === index) {
                         hoverStates[i] = null;
@@ -71,7 +88,22 @@ const GridSetup = () => {
                     }
                 }
                 else {
-                    hoverStates[i] = true;
+                    console.log(upperBounds);
+                    if (i > 9) {
+                        hoverStates[i - 10] = undefined;
+                    }
+                    if (i < 90) {
+                        hoverStates[i + 10] = undefined;
+                    }
+                    if (i === lowerBounds && !isFirstColumnOverFlow) {
+                        hoverStates[i] = undefined;
+                    }
+                    else if (i === upperBounds - 1 && !isLastColumnOverFloww) {
+                        hoverStates[i] = undefined;
+                    }
+                    else {
+                        hoverStates[i] = true;
+                    }
                 }
             }
         } else {
@@ -91,11 +123,13 @@ const GridSetup = () => {
         }
         for (let i = 0; i < GRID_COUNT; i++) {
             if (hoverStates[i] == clicked[i] && clicked[i] === true) {
+                debugger;
                 hoverStates = Array(100).fill(false);
                 hoverStates[index] = null;
                 break;
             }
         }
+
         return hoverStates;
     }
 
@@ -113,7 +147,7 @@ const GridSetup = () => {
                 onMouseEnter={handleHover}
                 hover={hover[i]} >
 
-            </WaterCellSetup>)
+            </WaterCellSetup>);
         }
         return arr;
     }

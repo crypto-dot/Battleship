@@ -5,10 +5,8 @@ class Gameboard {
         ship: false,
         hit: false
     });
-
-    ;
     #arrOfShips = [];
-    constructor(arrOfShips) {
+    constructor(arrOfShips = []) {
         let positionsOfShips = [];
         for (let ship of arrOfShips) {
             this.#arrOfShips.push(ship);
@@ -47,6 +45,22 @@ class Gameboard {
     }
     allShipsSunk() {
         return this.#sunk_ships === this.#arrOfShips.length;
+    }
+    getShips() {
+        return this.#arrOfShips;
+    }
+    setArrOfShips(arrOfShips) {
+        let positionsOfShips = [];
+        for (let ship of arrOfShips) {
+            this.#arrOfShips.push(ship);
+            positionsOfShips.concat(...ship.getShipPos());
+        }
+        for (let pos of positionsOfShips) {
+            this.#posArr[pos] = {
+                ...this.#posArr,
+                ship: true
+            }
+        }
     }
 }
 
