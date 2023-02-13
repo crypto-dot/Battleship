@@ -1,9 +1,0 @@
-.gridSetup {
-    display: grid;
-    grid-template-columns: repeat(10, clamp(30px, 4.55vw, 100px));
-    grid-template-rows: repeat(10, clamp(30px, 4.55vw, 100px));
-    column-gap: 0rem;
-    position: relative;
-
-
-}
